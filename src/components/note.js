@@ -17,7 +17,7 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-function Note({ note, dispatch,item }) {
+function Note({ note, dispatch }) {
   const classes = useStyles();
 
   function handleNameChange(value) {
