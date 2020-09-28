@@ -9,7 +9,7 @@ import TextField from "@material-ui/core/TextField";
 import { connect } from "react-redux";
 
 import Item from "./items";
-import { updateNote } from "../store/note/action";
+import { updateNote, additem } from "../store/note/action";
 
 const useStyles = makeStyles(() => ({
   headInput: {
@@ -17,12 +17,18 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-function Note({ note, dispatch }) {
+function Note({ note, dispatch,item }) {
   const classes = useStyles();
 
   function handleNameChange(value) {
     dispatch(updateNote("name", value));
   }
+
+  function handleItemChange(value) {
+    dispatch(additem("item", value));
+  }
+
+
 
   return (
     <Card variant="outlined">
@@ -34,7 +40,7 @@ function Note({ note, dispatch }) {
           onChange={(event)=>handleNameChange(event.target.value)}
         />
 
-        <Item />
+        <Item onChange={handleItemChange} item={note.item}/>
       </CardContent>
     </Card>
   );

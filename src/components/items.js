@@ -3,26 +3,24 @@ import { connect } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 
-import { additem } from "../store/note/action";
 
 const useStyles = makeStyles(() => ({
   itemInputt: {
     width: "100%",
   },
 }));
-function Item(item, dispatch) {
+
+function Item({item, onChange}) {
   const classes = useStyles();
 
-  function handleNameChange(value) {
-    dispatch(additem("name", value));
-  }
+ 
   return (
     <TextField
       className={classes.itemInputt}
       label="Add item"
       variant="outlined"
-      value={item.name}
-      onChange={(event) => handleNameChange(event.target.value)}
+      value={item}
+      onChange={(event) => onChange(event.target.value)}
     />
   );
 }
