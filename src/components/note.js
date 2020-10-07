@@ -1,34 +1,41 @@
 import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import Card from "@material-ui/core/Card";
-import CardActions from "@material-ui/core/CardActions";
-import CardContent from "@material-ui/core/CardContent";
-import Button from "@material-ui/core/Button";
-import Typography from "@material-ui/core/Typography";
-import TextField from "@material-ui/core/TextField";
 import { connect } from "react-redux";
 
-import Item from "./items";
-import { updateNote, additem } from "../store/note/action";
+import { makeStyles } from "@material-ui/core/styles";
+import Card from "@material-ui/core/Card";
+import CardContent from "@material-ui/core/CardContent";
+import TextField from "@material-ui/core/TextField";
+
+
+import Items from "./items";
+import { updateNote, addItem,deleteItem } from "../store/note/action";
 
 const useStyles = makeStyles(() => ({
   headInput: {
     width: "100%",
   },
+  
 }));
 
 function Note({ note, dispatch }) {
-  const classes = useStyles();
+   const classes = useStyles();
 
   function handleNameChange(value) {
     dispatch(updateNote("name", value));
   }
 
   function handleItemChange(value) {
-    dispatch(additem("item", value));
+      dispatch(updateNote("item", value));
   }
 
+  function handleDeleteItem(index){
+    dispatch(deleteItem(index));
+    console.log('Deleted');
+  }
 
+  function handleItemAdd() {
+    dispatch(addItem());
+  }
 
   return (
     <Card variant="outlined">
@@ -37,10 +44,16 @@ function Note({ note, dispatch }) {
           className={classes.headInput}
           label="Name your Note"
           value={note.name}
-          onChange={(event)=>handleNameChange(event.target.value)}
+          onChange={(event) => handleNameChange(event.target.value)}
         />
 
-        <Item onChange={handleItemChange} item={note.item}/>
+        <Items
+          onChange={handleItemChange}
+          onClick={handleItemAdd}
+          onDelete={handleDeleteItem}
+          items={note.items}
+          curItem={note.item}
+        />
       </CardContent>
     </Card>
   );
